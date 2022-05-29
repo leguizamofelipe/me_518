@@ -10,8 +10,19 @@ function [omega_list] = find_omegas(dh_table)
            omega_i = omega_list{i}; 
         end
         
-        theta_dot_i_plus_1 = sym(strcat('t_dot_', num2str(i+1)));
-        theta_double_dot_i_plus_1 = sym(strcat('t_double_dot', num2str(i+1)));
+        d_var_name = char(dh_table(i+1, 3));
+        if contains(d_var_name, 'd')
+            prismatic = true;
+        else
+            prismatic = false;
+        end
+        
+        if prismatic==false
+            theta_dot_i_plus_1 = sym(strcat('t_dot_', num2str(i+1)));
+        else
+            theta_dot_i_plus_1 = 0;
+        end
+                
         %fprintf('Finding omega %d (i=%d):\n', i+1, i) 
         T_i_plus_1 = find_T_i(dh_table, i+1, true);
         R_i_plus_1 = T_i_plus_1(1:3,1:3);

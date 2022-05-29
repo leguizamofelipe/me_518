@@ -31,7 +31,7 @@ P_c_i = {[L_1 0 0].', [L_2 0 0].'};
 
 tau_1 = n{1}(3);
 tau_2 = n{2}(3);
-
+disp('********************** PROBLEM 1 *********************');
 disp('tau 1:');
 disp(tau_1);
 
@@ -39,7 +39,6 @@ disp('tau 2:');
 disp(tau_2);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PROBLEM 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-clc
 clear all
 
 syms theta_1
@@ -68,10 +67,33 @@ P_c_i = {[0 0 0].', [0 0 0].'};
 [omegas, omega_dots, v_dots, v_dots_cg, F, N, f, n] = newton_euler(dh_table, v_dot_0, masses, inertias, P_c_i);
 
 tau_1 = n{1}(3);
-tau_2 = n{2}(3);
+tau_2 = f{2}(3);
 
+disp('********************** PROBLEM 2 *********************');
+disp('**************** Newton Euler Method: ****************');
 disp('tau 1:');
 disp(tau_1);
 
 disp('tau 2:');
 disp(tau_2);
+
+syms d_2_dot
+syms d_2_double_dot
+syms theta_dot_1
+
+disp('********************** PROBLEM 3 *********************');
+disp('******************* Cartesian Method: ****************');
+
+j = [-d2 0; 0 1];
+j_inv_t = (j.')^-1;
+M = [m2*d2 + Izz1 0; 0 m2];
+Mx = j_inv_t * M * j_inv_t;
+V = [2*m2*theta_dot_1*d2*d_2_dot; -m2*d2 * theta_dot_1^2];
+Vx = j_inv_t * (V-M*j^-1*[-d_2_dot 0; 0 0]*[theta_dot_1 d_2_dot].');
+
+disp('Vx:');
+disp(Vx);
+disp('Mx');
+disp(Mx);
+
+disp('Vx');

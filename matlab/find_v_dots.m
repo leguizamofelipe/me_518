@@ -15,18 +15,19 @@ function [v_dot_list] = find_v_dots(dh_table, v_dot_0)
            omega_i_dot = omega_dot_list{i};
            v_dot_i = v_dot_list{i}; 
         end
-        
+
         d_dot_i_plus_1 = sym(strcat('d_dot_', num2str(i+1)));
-        d_double_dot_i_plus_1 = sym(strcat('d_double_dot', num2str(i+1)));
+        d_double_dot_i_plus_1 = sym(strcat('d_double_dot_', num2str(i+1)));
         
         T_i_plus_1 = find_T_i(dh_table, i+1, true);
         R_i_plus_1 = T_i_plus_1(1:3,1:3);
         P_i = T_i_plus_1(1:3, 4);
         
-        if dh_table(i+1, 3) == 0
-            prismatic = false;
-        else
+        d_var_name = char(dh_table(i+1, 3));
+        if contains(d_var_name, 'd')
             prismatic = true;
+        else
+            prismatic = false;
         end
         
         if prismatic==false

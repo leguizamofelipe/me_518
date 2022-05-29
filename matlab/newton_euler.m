@@ -26,4 +26,4 @@ function [omegas, omega_dots, v_dots, v_dots_cg, F, N, f, n] =  newton_euler(dh_
         f{i} = R_i * f{i+1} + F{i};
         n{i} = N{i} + R_i * n{i+1} + cross(P_c_i{i}, F{i}) + cross(T_i(1:3, 4), R_i * f{i+1});
     end
-        end
+end

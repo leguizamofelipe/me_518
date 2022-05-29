@@ -17,6 +17,18 @@ function T_i = find_T_i(dh_table, i, symbolic)
         ci = subs(c, c);
         si = subs(s, s);
     end
+    
+    d_var_name = char(dh_table(i, 3));
+    if contains(d_var_name, 'd')
+        prismatic = true;
+    else
+        prismatic = false;
+    end
+
+    if prismatic==true && theta_i == 0 
+        ci = 1;
+        si = 0;
+    end
 
     T_i =   [       
             [        ci                 , -si                               ,          0            , a_i_minus_1                  ]
